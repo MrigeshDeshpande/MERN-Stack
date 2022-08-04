@@ -188,3 +188,366 @@ Default package manager for the Node.js environment, makes it easier for a devel
 npm can (in one command line) install all the dependencies of a project.
 Dependencies are also defined in package.json.
 
+## Synchronous & Asynchronous programming
+
+Synchronous
+------
+Synchronous, in general, means one at a time.
+Synchronous is the sequential flow of program execution in a programming
+context.
+
+The program/code will be read in sequence from top to bottom and
+executed line by line, with one thing getting executed at a time.
+The Javascript engine waits for the code to get executed completely before
+moving to the next line.
+So Synchronous programming executes each line of code at a time in a
+sequence
+
+Example:
+```Javascript
+	console.log('Hi');
+	function greet(){
+	 console.log('Welcome to
+	Grandline');
+	}
+	greet();
+	// Hi
+	// Welcome to Grandline
+```
+Asynchronous
+------
+Asynchronous, in general, is not occurring at the same time. 
+Asynchronous in a programming context is the execution of code/function without waiting for the other code/functions to execute. 
+This enables the Javascript engine to execute the code without halting the code execution process
+
+In Javascript, there are different ways to achieve asynchronous execution.
+
+Callbacks:
+
+We need to note that Callbacks are used inside Browser API/Web API functions or events.
+These APIs internally accept callback functions to achieve asynchronous programming. They have
+methods such as setTimeout and event handlers like click, mouse over, scroll, etc.
+
+Callbacks are functions that are passed as arguments to other functions and
+then invoked in the outer function to perform its operation.
+Also, callbacks take time to execute and are not executed immediately; they
+are passed at first and are invoked later.
+
+Callbacks should be implemented asynchronously. Else the event loop in the
+JS engine has to wait until the callback is executed, which may cause
+undesired output, or our program may become unresponsive.
+
+```Javascript
+	function greet(callbackFn){
+	 callbackFn();
+	 console.log('Welcome to
+	Grandline');
+	}
+	greet(function(){
+	 console.log('Hi')
+	});
+	// Hi
+	// Welcome to Grandline
+```
+
+```Javascript
+	// Same code with arrow syntax
+	function greet(callbackFn){
+	 callbackFn();
+	 console.log('Welcome to
+	Grandline');
+	}
+	greet(() => console.log('Hi'));
+	// Hi
+	// Welcome to Grandline
+```
+
+Call Stack
+------
+
+Call Stack is the stack data structure maintained by the Javascript engine. It
+operates in a LIFO manner (Last in First Out). It has the purpose of tracking
+the current function being executed. Call Stack is also known as Function
+execution stack.
+
+When the Javascript engine runs the code, the first thing that happens
+is an execution context is created precisely Global Execution Context
+(GEC) whenever the code execution is started.
+- So the first thing that’s pushed into the call stack is GEC.
+- After the execution of code, the execution context is popped out.
+- Remember, each function has its execution context.
+-Execution context is the environment in which the code is executed
+Example:
+```Javascript
+	function greet(){
+	 return function() {
+	 console.log('Welcome to Grandline');
+	 }
+	}
+	const result = greet();
+	result(); // Welcome to Grandline
+```
+
+Callback queue
+------
+
+Callback functions do not enter the call stack for execution directly instead a
+callback function is registered in the Web API and then the result of callback
+is stored now the callback is entered to Callback Queue. 
+
+It is a queue data structure that has entries in FIFO manner (First in First out) and stores all
+the callback functions ready for execution and once the call stack is empty
+they are deleted from the queue and pushed to the stack for execution
+
+Callbacks with Async Example:
+```javascript
+console.log('Hi');
+function callback(){
+ console.log('Welcome to Grandline');
+}
+setTimeout(callback, 2000);
+console.log('Join our Pirate Crew & be our Nakama');
+// Hi
+// Join our Pirate Crew & be our Nakama
+// Welcome to Grandline (with a delay of 2 seconds)
+
+```
+CallBacks hell
+------
+
+- It is a common scenario to have nested callbacks and all the
+nested callbacks will wait inside the callback queue and be pushed to the call stack in
+FIFO manner (First in First out).
+- This complex nesting of callbacks makes our code difficult to maintain and debug.
+- It is also prone to more errors if not written carefully.
+- This scenario in which we have complex nested callbacks is referred to as Callback hell.
+Here, each callback takes arguments that are the result of previous callbacks.
+- This kind of callback structure forms a pyramid like structure
+
+Example
+```Javascript
+	// Callbacks hell example
+	function cheese(){
+	 console.log('Add lots of cheese');
+	}
+	function patty(cheese){
+	 console.log('Add veggies and patties');
+	 cheese();
+	}
+	function bun(patty){
+	 console.log('Take two fresh buns');
+	 patty(cheese);
+	}
+	function burger(bun){
+	 setTimeout(() => {
+	 bun(patty);
+	 console.log('Our Burger is ready');
+	 }, 2000);
+	}
+	burger(bun);
+	console.log('Lets make a Burger');
+	
+	//Output:
+	
+	// Lets make a Burger// (after delay of 2000ms)
+	// Take two fresh buns
+	// Add veggies and patties
+	// Add lots of cheese
+	// Our Burger is ready
+```
+Timers in JS
+------
+In Javascript there are two Timing Events:
+● setTimeout()
+● setInterval()
+
+setTimeout()
+------
+
+setTimeout(): It is basically a function that is used to execute a function or code after a specified delay.
+`Syntax: setTimeout(function, milliseconds, args)`
+Example:
+```javascript
+	function burger(){
+	 setTimeout(() => {
+	 console.log('Our Burger
+	is ready');
+	 }, 2000);
+	}
+	burger();
+	// (after delay of 2 seconds)
+	// Our Burger is ready
+```
+clearTimeout()
+------
+
+clearTimeout() is the method used to cancel/clear the timeout even before it is
+executed.
+- It accepts the variable to which we assign the setTimeout(). This variable
+returns the reference of setTimeout(). Here we use clearTimeout(getFood)
+with getFood variable.
+- It does not clear/cancel the delay in the setTimeout it actually cancels the
+setTimeout() event itself.
+```javascript
+	const getFood = setTimeout((food) => {
+	 console.log('Our ' + food +' is ready');
+	}, 2000, 'Pizza');
+	clearTimeout(getFood);
+	// Nothing happens and code just exits
+```
+
+setInterval()
+------
+setInterval(): It is basically a function that is used to execute a function or code repeatedly after a
+specified interval of time.
+`Syntax: setInterval(function, milliseconds, args)`
+Example:
+```javascript
+	setInterval((food) => {
+	 console.log('Our ' + food +' is ready');
+	}, 2000, 'Pizza');
+	// Gets logged every 2 seconds
+	// Our Pizza is ready
+	// Our Pizza is ready
+	// Our Pizza is ready
+	// Our Pizza is ready
+	// Our Pizza is ready
+	// ^C
+```
+clearInterval()
+------
+clearInterval() is the method used to stop/clear the interval.
+- It accepts the variable more precisely intervalID to which we assign the
+setInterval(). Here we use clearInterval(getFood) with getFood variable to stop
+the setInterval().
+- It does not clear the delay in the setInterval. It actually stops the setInterval()
+event itself before execution
+
+```Javascript
+	const getfood = setInterval((food) => {
+	 console.log('Our ' + food +' is ready');
+	}, 2000, 'Pizza');
+	clearInterval(getfood);
+	// Nothing happens and code just exits
+```
+Promises: 
+Promises are objects in JS that let us perform asynchronous operations.
+
+An object that represents the
+completion (or failure) of an
+asynchronous operation and also its
+resulting value is known as a promise.
+```javascript
+	const newPromise= new Promise((resolve, reject)=>{
+	console.log("Promise created");
+	setTimeout() => {
+	reject ("Some Error");
+	), 1000); //reject after 1 sec
+
+	console.log("Exit from promise")
+	});
+
+	console.log("First txt in sync");
+	
+	newPromise
+	.then((result) => {
+	console.log("success: ", result);
+	})
+	.catch((error) => { 
+	console.log("Faliure:", error);
+	})
+	.finally (() => {
+	console.log("Promise completed");
+	});
+	
+	console.log("Last txt sync");
+```
+## Promise Hell
+
+Promise hell is a self created
+problem due to lack of
+understanding of Promises,
+unlike callback hell. In Promise
+hell as well we have to wait for
+other promises to return and it
+will fill the stack.
+```javascript
+	fetchStory()
+	.then((story) => { return findText (story);
+	})
+	.then((txt) => {
+	return print (txt);
+	});
+
+	//single liners
+	fetchStory (
+	.then((story) => findText (story))
+	.then((txt) => print(txt));
+
+	// inline
+	fetchStory()
+	.then (findText)
+	.then (print);
+```
+## Async/Await: 
+
+Async Await keywords were introduced in Javascript in ECMAScript 2017. This made
+asynchronous programming easier and is considered a better alternative to promises
+
+Async/ Await is used to handle promises in
+synchronous code fashion with less code
+effort.
+
+Async: We put this keyword before any
+function then, it will return a promise.
+
+Await: This keyword is used before a promise
+inside the Async block to block the code until
+promise resolves or reject.
+
+So, these keyword helps us to get write a
+synchronous fashion code with cleaner syntax.
+
+Example:
+```Javascript
+const first = ()=> new Promise(resolve =>{
+setTimeout(() => resolve ('first ()'), 1000);
+});
+const second () => new Promise (resolve => { 
+setTimeout(() => resolve('second ()'), 1000);
+});
+const third =() => new Promise(resolve -> {
+setTimeout(() => resolve('third ()'), 1000);
+});
+
+//First Apporach -->Asynchronous
+
+Promise.all([first(), second (), third (),(someKey:someValue }]}
+.then((data) => {
+console.log("success:", data);
+})
+.catch((err) => {
+console.log("error:", err);
+})
+
+//Second Approach -->Synchronous
+
+const process = async () => {
+const first await a();
+const second = await b();
+const third = await c();
+
+return [first, second, third];	
+};
+
+process
+	.then((data)=>{
+	console.log("success:",data);
+	})
+	.catch((err)=>
+	{
+		console.log("error:",err);
+	})
+```
+
+
