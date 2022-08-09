@@ -549,5 +549,559 @@ process
 		console.log("error:",err);
 	})
 ```
+ Introduction to Express
+ ------
+ 
+  Routing Logic
+  ```Javascript
+  Return Different response data based on different request URL’s
+
+ {
+ case "/name":
+ res.end('Http Server response : Mrigesh Deshpande);
+ break;
+ case "/company":
+ res.end('Http Server response : A reputed MNC');
+ break;
+ default:
+ res.end('Http Server response : Incorrect
+endpoint!');
+ }
+ ```
+ How we need to write redundant code which is not extensible to add new route everytime
+ ![image](https://user-images.githubusercontent.com/67750918/183666988-653aa36b-2a66-4fa4-a849-052282f37053.png)
+
+Express JS to rescue ->
+![image](https://user-images.githubusercontent.com/67750918/183667159-8d426fa2-5b3b-4cbd-b9b8-85dfeac4af30.png)
+
+Express.js Features
+------
+● Fast and simple server side development
+
+● Access to middleware
+
+● Routing
+
+● Templates
+
+```Javascript
+	var expressJs = require("express");
+	var expressApp = expressJs();
+	// Add routing logic
+	expressApp.get("/", function(request, response){
+	 response.send("ExpressJs backed https endpoint is ready!!!");
+	 });
+	//Ask app to listen on given a port
+	expressApp.listen(8000, function(){
+	 console.log("Application is listening to port 8000");
+	 });
+	 
+```
+![image](https://user-images.githubusercontent.com/67750918/183668202-d1550809-38fb-4662-9cc4-68547243bae6.png)
+
+Understanding express
+------
+1. Import modules and create express app
+
+2. expressApp.get() helps us respond to get requests.
+
+3. expressApp.listen() helps us listen to a particular code
+
+Let us now add multiple routes using Express and test it
+
+```Javascript
+expressApp.get("/", function(request, response){
+ response.send("ExpressJs backed http endpoint is ready!!!");
+ });
+// Add routing logic
+expressApp.get("/name", function(request, response){
+ response.send("ExpressJs backed http endpoint is ready! Name : Tushar Raina");
+ });
+// Add routing logic
+expressApp.get("/company", function(request, response){
+ response.send("ExpressJs backed http endpoint is ready! Company : A reputed MNC");
+ });
+```
+
+## Express Middleware
+
+![image](https://user-images.githubusercontent.com/67750918/183668955-ca261e39-8b44-41c8-9c36-96899dad6716.png)
+
+What can Middlewares can handle
+
+1. Logging
+
+2. Sending Static Files
+
+3. Authentication and Authorisation
+
+4. Session Management
+
+5. Parsing
+
+6. Rate Limiting
+
+How do middlewares work?
+------
+1. Each middleware has access to request , response and
+next() method
+
+2. Each of them can terminate the flow
+
+3. Ultimately we get a graph like structure which keeps our
+code modular and simpler
+![image](https://user-images.githubusercontent.com/67750918/183669248-d4ed0d50-0a85-402b-82e6-ed05745f8a4d.png)
+
+Common Express middlewares
+------
+
+1. Morgan
+2. Helmet
+3. Body-Parser
+4. Cors
+5. Express rate Limit
 
 
+ ## Model View Controller
+ 
+ What is MVC
+ ------
+The Model-View-Controller is an architectural pattern that separates an application
+into three main logical components: the model, the view, and the controller. This is
+used in combination with the front end and back end. Each of these components is
+built to handle specific development aspects of an application. MVC is one of the
+most frequently used industry-standard web development frameworks to create
+scalable and extensible projects.
+
+What is the model?
+------
+The Model component corresponds to all the data-related logic that the user works
+with. This includes organising the data from the database in a presentable format
+and sending it as a response. This can represent either the data transferred
+between the View and Controller components or any other business logic-related
+data. For example, a Customer object will retrieve the customer information from
+the database, manipulate it, and update it back to the database or use it to render
+data.
+
+What is a view?
+------
+The View component is used for all the UI logic of the application. For example, the
+Customer view will include all the UI components such as text boxes, dropdowns,
+etc., that the final user interacts with.
+
+What is the controller?
+------
+Controllers act as an interface between Model and View components to process all
+the business logic and incoming requests, manipulate data using the Model
+component, and interact with the Views to render the final output. For example, the
+Customer controller will handle all the interactions and inputs from the Customer
+View and update the database using the Customer Model. The same controller will
+be used to view the Customer data.
+
+![image](https://user-images.githubusercontent.com/67750918/183652609-e1eabde0-ac24-4afc-934e-6fcad8e38904.png)
+
+Example of MVC
+The car driving mechanism is another example of the MVC model.
+● Every car consists of three main parts.
+● The user interface's view includes gear lever, panels, steering wheel, brake, etc.
+● The controller is the mechanism which is Engine
+● The model means the storage, which is the Petrol or Diesel tank
+Car runs from the engine take fuel from storage but only uses mentioned user
+interface devices.
+
+MVC using Node and Express
+------
+• We can have a basic approach to work with nodes and express while building an
+MVC. Now let’s try to clarify why using an MVC is useful and how it can turn your
+standard Express/Node.js App into a high-level app just by wrapping around an
+MVC Architecture.
+
+• The code will contain only one home page and some templates. Here we are
+trying to create a login app with the MVC architecture. This is an example to give
+clarity around how it works.
+
+• Since the Architecture comprises three main parts (Controller, Model, and View)
+so under the src/ folder, we need to have the other subparts in different folders
+
+Data Modelling
+------
+The Model-Viewer-Controller is a dominant paradigm for application development.
+The MVC approach separates key common concerns for organized, manageable
+application code.
+
+The model classes represent domain-specific data and business logic in the MVC
+application. It represents the shape of the data as public properties and business
+logic as methods. 
+
+## What is ORM?
+
+Object-relational mapping is the process of mapping between objects and relational
+database systems. Multiple databases use data in different ways, and
+object-relational mapping maintains objects when the sources and app they access
+can change with time. ORM is used to handle the passage of data between different
+databases.
+
+Why do we need ORM?
+------
+
+ORM helps to implement the principle of Do Not Repeat Yourself.
+It helps with marshalling. ORMs generally allow fetching complete objects from the
+database rather than row objects to wrap yourself.
+
+Routing in Express
+------
+
+Routing is very crucial. It defines the URL structure that can be used to
+interact with the web application.
+Express apps use routers that are containers for a bunch of middleware. The
+middleware holder can be used on a certain route, which enables to place the logic
+in separate files and bring them together. 
+
+Setting up Database
+------
+
+You can install MySQL client and Sequelize by executing the following command:
+ npm install sequelize mysql2
+Then we can add a models directory with a file called index.js, which will contain the
+database and Sequelize.js setup.
+
+First, we include the modules that we’re going to use:
+
+• Sequelize allow us to create a new Sequelize instance and connect to the db
+
+• We also define a User model and add it into our db object to make it accessible outside.
+
+• require("./User.js")(sequelize, Sequelize)
+
+• The db object which corresponds to the database is exported, and it corresponds to the database
+methods for each model. We can access it when we want to fetch the data from the database.
+
+
+## ORM :Object Relational Mapping
+
+ORM stands for Object Relational Mapping, and is popular among the Object oriented programming
+developers. It's a technique that performs the mapping of the software objects into the tables of a
+database. So developers can interact with these objects to perform the CRUD operations rather than
+writing the sql queries.
+
+Working
+------
+ORM creates a model using the OOP providing a high level of abstraction. Mapping describes the
+relationship of these objects to the database. Once the model is created it can be used to establish
+the connection between the application and the sql code that is needed to manage the data
+
+Advantage:
+------
+We now know that ORM minimizes the amount of knowledge needed to write the sql by automatically
+generating the sql code still there are three major advantage of using it:
+1. Application Designing : A well written ORM will force the developer to follow the best practice of
+application designing.
+
+2. Productivity : Since now the developer need not to focus much on the data access code which
+used to be time consuming, developers can save their development time and can focus more on
+the business logic.
+
+3. Reduced Testing Time : Negligible amount of time will be needed to test the data access code
+as the code generated by the ORM is already tested. 
+
+Types of ORM:
+------
+Few of the popular ORM’s used in the market alongside nodejs are:
+
+1. NodeORM: It's an ORM that works with MySQL, SQLlite and PostgresSQL
+
+2. Prisma2 : It's an open source ORM used for Nodejs and Typescript and works with databases
+such as MySQL, PostgresQL and SQLite.
+
+3. Sequelize: Promise based ORM module used for NodeJS and works with databases such as
+PostgreSQL, MySQL, SQLite, MSSQL and MariaDB
+
+
+## Sequelize
+Sequelize is a modern TypeScript and Node.js ORM for Postgres, MySQL, MariaDB, SQLite and SQL Server, and more. Featuring solid transaction support, relations, eager and lazy loading, read replication and more.
+
+### Installation
+
+Make sure you have Sequelize installed. Then install the Sequelize CLI to be used in your project with
+
+```Javascript
+npm install --save-dev sequelize-cli
+```
+
+And then you should be able to run the CLI with
+
+```Javascript
+npx sequelize --help
+```
+
+Usage
+```Javascript
+
+Sequelize CLI [Node: 10.21.0, CLI: 6.0.0, ORM: 6.1.0]
+
+sequelize <command>
+
+Commands:
+  sequelize db:migrate                        Run pending migrations
+  sequelize db:migrate:schema:timestamps:add  Update migration table to have timestamps
+  sequelize db:migrate:status                 List the status of all migrations
+  sequelize db:migrate:undo                   Reverts a migration
+  sequelize db:migrate:undo:all               Revert all migrations ran
+  sequelize db:seed                           Run specified seeder
+  sequelize db:seed:undo                      Deletes data from the database
+  sequelize db:seed:all                       Run every seeder
+  sequelize db:seed:undo:all                  Deletes data from the database
+  sequelize db:create                         Create database specified by configuration
+  sequelize db:drop                           Drop database specified by configuration
+  sequelize init                              Initializes project
+  sequelize init:config                       Initializes configuration
+  sequelize init:migrations                   Initializes migrations
+  sequelize init:models                       Initializes models
+  sequelize init:seeders                      Initializes seeders
+  sequelize migration:generate                Generates a new migration file      [aliases: migration:create]
+  sequelize model:generate                    Generates a model and its migration [aliases: model:create]
+  sequelize seed:generate                     Generates a new seed file           [aliases: seed:create]
+
+Options:
+  --version  Show version number                                                  [boolean]
+  --help     Show help                                                            [boolean]
+
+Please specify a command
+```
+
+Without Sequelize
+------
+```Javascript
+
+> CREATE DATABASE ecom_db;
+> USE ecom_db;
+> CREATE TABLE `Categories` (
+ `ID` int NOT NULL AUTO_INCREMENT,
+ `Name` varchar(255) NOT NULL,
+ `Description` varchar(255) NOT NULL,
+ `CreatedAt` datetime DEFAULT CURRENT_TIMESTAMP,
+ `UpdatedAt` datetime DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY (`ID`)
+)
+```
+With Sequelize
+------
+```Javascript
+const Category = sequelize.define("category", {
+ id: {
+ type: Sequelize.INTEGER,
+ primaryKey: true,
+ autoIncrement: true
+ },
+ name: {
+ type: Sequelize.STRING,
+ allowNull: false
+ },
+ description: {
+ type: Sequelize.STRING
+ },{
+ tableName: 'categories'
+ /**
+ * This helps you to provie a custom name to the table
+ * If above is not provided, model name is converted into
+plural and set as the table name
+ *
+ * If we want to just use the model name provided, we can
+provide the below option :
+ *
+ * freezeTableName: true
+ */
+ });
+ return Category;
+```
+
+```Javascript
+	const Sequelize = require("sequelize");
+	const sequelize = new Sequelize(
+	 ‘ecom_db’,
+	 ‘root’,
+	 ‘password’, {
+	 host: localhost,
+	 dialect: mysql,
+	 operatorsAliases: false,
+	 pool: {
+	 max: 5,
+	 min: 0,
+	 acquire:30000,
+	 idle: 10000 } } );
+```
+where:
+1. Host: is the ip of the system where the database is located. Currently its on local system so its
+set to `localhost`
+
+2. dialect: It specifies the connector library that will be used by the sequelize for the database.
+Since we are working with MySQL we specify ‘mysql’
+
+3. operatorAliases: It is a flag that allows a specific symbol operator. Ideally we should use
+sequelize without any aliases as it improves the security, therefore we have set the flag to false.
+Few of the default alias that sequelize uses are $eq, $ne, $lte,$gt,$lt, etc.
+
+4.Pool: It contains the parameter of the connection pool between the application and the
+database that is created while initializing the sequelize. When the connection to the database is
+made from more than one process then we might have to create more number of instances in
+each process. But in each instance we have to define a maximum connection for the pool size
+so that the total pool size is met for each instance. For eg. If we need to create a max
+connection pool size of 60 and in total we had 6 process then the Sequelize instance of each
+process should have a maximum of size 10 connection pool.
+
+Max and min are used to define the threshold for such number of connection pool size.
+5. Acquire: max time in ms that a pool will try to get connection before throwing error for that
+instance of Sequelize.
+
+6. idle: max time in ms that a pool will stay idle before releasing the connection.
+
+Benefits of Sequelize:
+------
+
+Lets summarize the advantage of sequelize:
+1. Helps in writing less and consistent code
+2. Avoid SQL queries in most of the cases
+3. Abstracts database engine
+
+## Basic Model Querying Techniques
+
+INSERT
+------
+● Syntax:
+
+`Model.create()`
+```Javascript
+● Sequelize command:
+
+Category.create({name:’Electronics’, description:`Product Descriptions`})
+● Sql command:
+
+Insert into Category(‘name’,’descriptions’) values (‘Electronics’,’Product Descriptions’)
+```
+```Javascript
+● Sequelize command:
+
+Category.create({name:’Electronics’,description:`Product Descriptions`},{fields:[name]})
+
+● Sql command:
+
+Insert into Category(‘name’) values (‘Electronics’)
+```
+
+SELECT
+------
+```Javascript
+To select all the records from the table we can use the .findAll() function.
+
+Syntax:
+Model.findAll()
+
+Suppose we have to find all the records of category table then we can run the following command:
+Category.findAll()
+
+To select a specific record from the model we can populate the `attributes` argument of `findAll()`
+function as:
+Syntax:
+Model.findAll({attributes:[‘col1’,’col2’,[‘col3’, `column3`]]});
+
+Here we are selecting the values of col1, col2 and col3 from the table.
+[‘col3’, `column3`] will rename the col3 as column3 while returning the value.
+````
+
+## Aggregation:
+
+```Javascript
+To perform any aggregation such as count,max, min, etc. while working with findAll we can use
+sequelize.fn function.
+Suppose we have to count the number of categories in the category table:
+Category.findAll(attributes:[[sequelize.fn(‘COUNT’,sequelize.col(‘id’)),’
+num_category’]])
+Similar sql function for the same would be:
+Select count(id) as num_category from Category
+```
+
+Where clause as we know is used to perform the filtration in the search query.
+```Javascript
+	
+
+Syntax:
+	Model.findAll({
+	where:{
+	attribute_nam
+	e:value } })
+	
+	Which is equivalent to the following sql query: Select * from . . . where attribute_name = value
+```
+```Javascript
+Suppose we need to find out the category from the category table whose id is either 2 or 5 then that
+can be done by running either of the following commands:
+	category.findAll({
+where:{
+[Op.or]:{
+ id:2,
+ id:5
+}
+})
+
+```
+
+UPDATE
+------
+```Javascript
+To update the value of the record in the database we can use the .update function
+Syntax:
+Model.Update({atrrib_1:val_1},
+{
+where:{
+attrib_1:null
+}
+})
+It means that set the value of attrib_1 to val_1 where the value of attrib_1 is null
+```
+
+DELETE
+------
+```Javascript
+To delete a record from the table, or to truncate the table we can use the .destroy function of
+sequelize along with the where clause as follow:
+Syntax:
+Model.destroy({
+ where:{
+ attrib:val } })
+To delete the record with `attrib` as `val`
+To truncate the table one can set the truncate flag of destroy function:
+Model.destroy({
+truncate:true });
+```
+Associations
+------
+The standard three associations that is, one to one, one to many and many to many is supported by
+the sequelize. The only thing is that there are four different functions that are used to form either of
+these three associations. Such functions are:
+1. HasOne
+2. Belongs to
+3. HasMany
+4. BelongstoMany
+Suppose we have two models(tables) A & B then the formation of the associations using the above
+forms are as follows:
+
+One-to-One association is formed by combining the hasOne and belongsTo
+Syntax:
+A.hasOne(B,{/* options */});
+ A.belongsTo(B);
+ 
+One-to-Many association is formed by combining the hasMany and belongsTo
+Syntax:
+```
+A.hasMany(B,{/* options */});
+A.belongsTo(B);
+ ```
+ 
+● Many-to-Many association is formed by combining two belongs to many.
+Syntax:
+ ```
+A.belongsToMany(B,{/* options */});
+A.belongsToMany(B);
+ ```
+ 
+ 
